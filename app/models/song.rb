@@ -1,6 +1,12 @@
 class Song < ActiveRecord::Base
   belongs_to :artist
 
+  def index
+  end
+
+  def show
+  end
+
   def artist_name
     self.try(:artist).try(:name)
   end
