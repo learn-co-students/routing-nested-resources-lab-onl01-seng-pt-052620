@@ -1,11 +1,43 @@
 class SongsController < ApplicationController
   def index
-    @songs = Song.all
-  end
+    if params[:artist_id] 
+      @artist = Artist.find_by(id: params[:artist_id])
+      if @artist.nil? 
+        redirect_to artists_path  
+        flash[:alert] = "Artist not found" 
+      else 
+        @songs = @artist.songs 
+      end
+    else
+      @songs = Song.all    
+  end 
+end 
 
   def show
-    @song = Song.find(params[:id])
-  end
+    if Song.find_by(id: params[:id]).nil?  
+      flash[:alert] = "Song not found"  
+      redirect_to artist_songs_path
+    else 
+      @song = Song.find(params[:id])
+      @song 
+    end 
+  end 
+# 4. Update the `songs_controller` to allow the `songs#index` and `songs#show` actions to handle a valid song for the artist.
+# 5. In the `songs#index` action, if the artist can't be found, redirect to the `index` of artists, and set a `flash[:alert]` of "Artist not found."
+
+# app/controllers/posts_controller.rb
+
+# def index
+#   if params[:author_id]
+#     @posts = Author.find(params[:author_id]).posts
+#   else
+#     @posts = Post.all
+#   end
+# end
+
+# def show
+#   @post = Post.find(params[:id])
+# end
 
   def new
     @song = Song.new
