@@ -1,6 +1,10 @@
 <h1><%= @artist.name %></h1>
 <ul>
   <% @artist.songs.each do |song| %>
-    <li><%= song.title %></li>
+  <%= link_to song.title, artist_song_path(song.artist) %>
   <% end %>
 </ul>
+
+
+<!-- 
+3. Update the artists `show` view to list each song for that artist, and use the new nested resource route helper to link each song to its corresponding `show` page. --> 
